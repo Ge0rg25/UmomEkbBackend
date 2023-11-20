@@ -1,4 +1,4 @@
-package ru.umom.smolathonbackend.utils;
+package ru.umom.umombackend.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

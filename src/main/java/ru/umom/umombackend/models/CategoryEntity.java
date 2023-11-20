@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
@@ -11,16 +14,24 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Data
 @Table(name = "CATEGORIES")
-public class CategoryEtity {
+public class CategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
+
+    @OneToMany(mappedBy = "category", orphanRemoval = true)
+    private Set<DishEntity> dishes = new LinkedHashSet<>();
 
     String title;
 
     String description;
 
     String photoId;
+
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "organization_id", nullable = false)
+    private OrganizationEntity organization;
 
 }

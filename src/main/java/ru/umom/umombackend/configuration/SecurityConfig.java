@@ -38,8 +38,6 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/tours/create", "/tours/update", "/tours/delete").authenticated()
-                        .requestMatchers("/preferences/add", "/preferences/delete", "/preferences/get").authenticated()
-                        .requestMatchers("/arts/create", "/arts/delete").authenticated()
                         .anyRequest().permitAll()
                 ).oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
