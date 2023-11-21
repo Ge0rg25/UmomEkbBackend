@@ -20,8 +20,6 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    @OneToMany(mappedBy = "category", orphanRemoval = true)
-    private Set<DishEntity> dishes = new LinkedHashSet<>();
 
     String title;
 
@@ -29,6 +27,10 @@ public class CategoryEntity {
 
     String photoId;
 
+
+
+    @OneToMany(mappedBy = "category", orphanRemoval = true)
+    private Set<DishEntity> dishes = new LinkedHashSet<>();
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "organization_id", nullable = false)
