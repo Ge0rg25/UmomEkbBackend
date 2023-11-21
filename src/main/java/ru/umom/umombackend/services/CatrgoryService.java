@@ -37,13 +37,7 @@ public class CatrgoryService {
                 .build();
         catrgoryRepository.save(category);
 
-        CatrgoryDto.Response.BaseResponse response = new CatrgoryDto.Response.BaseResponse(
-                category.getId(),
-                category.getTitle(),
-                category.getDescription(),
-                category.getPhotoId()
-        );
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<?> update(CatrgoryDto.Request.Update dto) {
@@ -52,7 +46,7 @@ public class CatrgoryService {
         category.setDescription(dto.description());
         category.setPhotoId(dto.photoId());
         catrgoryRepository.save(category);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<?> delete(CatrgoryDto.Request.Delete dto) {

@@ -27,7 +27,7 @@ public class DishEntity {
     double price;
 
     @Column
-    String cpfc;
+    double cpfc;
 
 
     @ManyToOne(optional = false)
