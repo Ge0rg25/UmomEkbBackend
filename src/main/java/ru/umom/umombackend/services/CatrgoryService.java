@@ -61,9 +61,23 @@ public class CatrgoryService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<?> getAll(CatrgoryDto.Request.GetAll dto) {
+    public ResponseEntity<?> getByOrganization(CatrgoryDto.Request.GetByOrganization dto) {
         OrganizationEntity organization = organizationRepository.findById(dto.organizationId()).orElseThrow(OrganizationNotExsitsError::new);
         Set<CategoryEntity> categories = organization.getCategories();
+        List<CatrgoryDto.Response.BaseResponse> response = new ArrayList<>();
+        for(CategoryEntity category: categories){
+            response.add(new CatrgoryDto.Response.BaseResponse(
+                    category.getId(),
+                    category.getTitle(),
+                    category.getDescription(),
+                    category.getPhotoId()
+            ));
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<?> getAll(){
+        List<CategoryEntity> categories = catrgoryRepository.findAll();
         List<CatrgoryDto.Response.BaseResponse> response = new ArrayList<>();
         for(CategoryEntity category: categories){
             response.add(new CatrgoryDto.Response.BaseResponse(

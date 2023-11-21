@@ -35,9 +35,14 @@ public class CategoryController {
     }
 
 
-    @PostMapping("/get/all")
-    public ResponseEntity<?> getAll(@RequestBody @Validated CatrgoryDto.Request.GetAll dto){
-        return catrgoryService.getAll(dto);
+    @PostMapping("/get/by/organization")
+    public ResponseEntity<?> getByOrganization(@RequestBody @Validated CatrgoryDto.Request.GetByOrganization dto){
+        return catrgoryService.getByOrganization(dto);
+    }
+
+    @GetMapping("/get/all")
+    public ResponseEntity<?> getAll(){
+        return catrgoryService.getAll();
     }
 
 }
