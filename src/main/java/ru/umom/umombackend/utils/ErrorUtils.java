@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 
-public class ErrorUtils {
+public class  ErrorUtils {
 
     static public ResponseEntity<?> genereateErrorResponse(String message, HttpStatus status){
         return new ResponseEntity<>(Map.of("error", message), status);

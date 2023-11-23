@@ -31,14 +31,7 @@ public class OrganizationService {
                 .build();
 
         organizationRepository.save(organizationEntity);
-        OrganizationDto.Response.BaseResponse response = new OrganizationDto.Response.BaseResponse(
-                organizationEntity.getId(),
-                organizationEntity.getTitle(),
-                organizationEntity.getDescription(),
-                organizationEntity.getAddress(),
-                organizationEntity.getPhotoId()
-        );
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<?> update(OrganizationDto.Request.Update dto) {
@@ -50,14 +43,7 @@ public class OrganizationService {
         organizationEntity.setPhotoId(dto.photoId());
 
         organizationRepository.save(organizationEntity);
-        OrganizationDto.Response.BaseResponse response = new OrganizationDto.Response.BaseResponse(
-                organizationEntity.getId(),
-                organizationEntity.getTitle(),
-                organizationEntity.getDescription(),
-                organizationEntity.getAddress(),
-                organizationEntity.getPhotoId()
-        );
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok().build();
     }
 
 
@@ -65,7 +51,7 @@ public class OrganizationService {
         OrganizationEntity organizationEntity = organizationRepository.findById(dto.id()).orElseThrow();
         organizationRepository.delete(organizationEntity);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
 
@@ -75,19 +61,22 @@ public class OrganizationService {
 
         for(OrganizationEntity organizationEntity: organizations ){
             responses.add(
-                    new OrganizationDto.Response.BaseResponse(
-                            organizationEntity.getId(),
-                            organizationEntity.getTitle(),
-                            organizationEntity.getDescription(),
-                            organizationEntity.getAddress(),
-                            organizationEntity.getPhotoId()
-                    )
+                    entityToBaseResponse(organizationEntity)
             );
         }
 
         return ResponseEntity.ok(responses);
+    }
 
 
+    private OrganizationDto.Response.BaseResponse entityToBaseResponse(OrganizationEntity organization){
+       return new OrganizationDto.Response.BaseResponse(
+               organization.getId(),
+               organization.getTitle(),
+               organization.getDescription(),
+               organization.getAddress(),
+               organization.getPhotoId()
+       );
     }
 
 }

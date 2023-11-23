@@ -60,12 +60,7 @@ public class CatrgoryService {
         Set<CategoryEntity> categories = organization.getCategories();
         List<CatrgoryDto.Response.BaseResponse> response = new ArrayList<>();
         for(CategoryEntity category: categories){
-            response.add(new CatrgoryDto.Response.BaseResponse(
-                    category.getId(),
-                    category.getTitle(),
-                    category.getDescription(),
-                    category.getPhotoId()
-            ));
+            response.add(entityToBaseResponse(category));
         }
         return ResponseEntity.ok(response);
     }
@@ -74,15 +69,18 @@ public class CatrgoryService {
         List<CategoryEntity> categories = catrgoryRepository.findAll();
         List<CatrgoryDto.Response.BaseResponse> response = new ArrayList<>();
         for(CategoryEntity category: categories){
-            response.add(new CatrgoryDto.Response.BaseResponse(
-                    category.getId(),
-                    category.getTitle(),
-                    category.getDescription(),
-                    category.getPhotoId()
-            ));
+            response.add(entityToBaseResponse(category));
         }
         return ResponseEntity.ok(response);
     }
 
+    private CatrgoryDto.Response.BaseResponse entityToBaseResponse(CategoryEntity category){
+        return new CatrgoryDto.Response.BaseResponse(
+                category.getId(),
+                category.getTitle(),
+                category.getDescription(),
+                category.getPhotoId()
+        );
 
+    }
 }

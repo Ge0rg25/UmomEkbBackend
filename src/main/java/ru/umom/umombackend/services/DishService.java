@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import ru.umom.umombackend.dto.CatrgoryDto;
 import ru.umom.umombackend.dto.DishDto;
 import ru.umom.umombackend.errors.common.CategoryNotExistsError;
 import ru.umom.umombackend.errors.common.DishNotExistsError;
@@ -57,6 +56,7 @@ public class DishService {
     public ResponseEntity<?> delete(DishDto.Request.Delete dto){
         DishEntity dish = dishRepository.findById(dto.id()).orElseThrow(DishNotExistsError::new);
         dishRepository.delete(dish);
+        return ResponseEntity.ok().build();
     }
 
 
@@ -64,14 +64,7 @@ public class DishService {
         List<DishEntity> dishes = dishRepository.findAll();
         List<DishDto.Response.BaseResponse> response = new ArrayList<>();
         for(DishEntity dish: dishes){
-            response.add(new DishDto.Response.BaseResponse(
-                    dish.getId(),
-                    dish.getTitle(),
-                    dish.getDescription(),
-                    dish.getPrice(),
-                    dish.getCpfc(),
-                    dish.getCategory().getId()
-            ));
+            response.add(entityToBaseResponse(dish));
         }
         return ResponseEntity.ok(response);
 
@@ -82,17 +75,21 @@ public class DishService {
         Set<DishEntity> dishes = category.getDishes();
         List<DishDto.Response.BaseResponse> response = new ArrayList<>();
         for(DishEntity dish: dishes){
-            response.add(new DishDto.Response.BaseResponse(
-                    dish.getId(),
-                    dish.getTitle(),
-                    dish.getDescription(),
-                    dish.getPrice(),
-                    dish.getCpfc(),
-                    dish.getCategory().getId()
-            ));
+            response.add(entityToBaseResponse(dish));
         }
         return ResponseEntity.ok(response);
 
+    }
+
+    private DishDto.Response.BaseResponse entityToBaseResponse(DishEntity dish){
+        return new DishDto.Response.BaseResponse(
+                dish.getId(),
+                dish.getTitle(),
+                dish.getDescription(),
+                dish.getPrice(),
+                dish.getCpfc(),
+                dish.getCategory().getId()
+        );
     }
 
 }

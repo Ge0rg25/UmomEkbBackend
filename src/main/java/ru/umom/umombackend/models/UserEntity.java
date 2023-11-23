@@ -24,10 +24,10 @@ public class UserEntity {
 
 
     @Column
-    int floor;
+    short floor;
 
     @Column
-    int workstation;
+    short workstation;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<OrderEntity> orderEntities = new LinkedHashSet<>();
