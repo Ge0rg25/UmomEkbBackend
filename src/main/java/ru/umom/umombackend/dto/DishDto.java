@@ -42,6 +42,6 @@ public class DishDto {
     }
 
     public static class Response {
-        public record BaseResponse(String id, String title, String description, double price, double cpfc, String categoryId) implements Id, Title, Description, Price, CPFC, CategoryId{}
+        public record Dish(String id, String title, String description, double price, double cpfc, String categoryId) implements Id, Title, Description, Price, CPFC, CategoryId{}
     }
 }

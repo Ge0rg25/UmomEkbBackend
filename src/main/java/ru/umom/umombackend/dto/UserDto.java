@@ -19,13 +19,13 @@ public class UserDto {
     }
 
     public static class Request {
-        public record Update(String id, String name, short floor, short workstation) implements Id, Name, Floor, Workstation{}
+        public record Update(String name, short floor, short workstation) implements Name, Floor, Workstation{}
         public record Get(String id) implements Id {}
 
     }
 
     public static class Response {
-        public record BaseResponse(String id, String name, short floor, short workstation) implements Id, Name, Floor, Workstation {}
+        public record User(String id, String name, short floor, short workstation) implements Id, Name, Floor, Workstation {}
     }
 
 

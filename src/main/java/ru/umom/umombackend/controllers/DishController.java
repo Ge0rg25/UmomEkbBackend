@@ -28,7 +28,7 @@ public class DishController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(DishDto.Request.Delete dto){
+    public ResponseEntity<?> delete(@RequestBody @Validated DishDto.Request.Delete dto){
         return dishService.delete(dto);
     }
 
@@ -38,7 +38,7 @@ public class DishController {
     }
 
     @PostMapping("/get/by/categories")
-    public ResponseEntity<?> getByCategory(DishDto.Request.GetByCategory dto){
+    public ResponseEntity<?> getByCategory(@RequestBody @Validated DishDto.Request.GetByCategory dto){
         return dishService.getByCategory(dto);
     }
 

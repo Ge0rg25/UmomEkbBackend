@@ -3,7 +3,10 @@ package ru.umom.umombackend.models;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.sql.Timestamp;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -30,6 +33,13 @@ public class UserEntity {
     short workstation;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private Set<OrderEntity> orderEntities = new LinkedHashSet<>();
+    private Set<OrderEntity> orders = new LinkedHashSet<>();
+
+
+    @CreationTimestamp
+    Timestamp createdAt;
+
+    @UpdateTimestamp
+    Timestamp updatedAt;
 
 }

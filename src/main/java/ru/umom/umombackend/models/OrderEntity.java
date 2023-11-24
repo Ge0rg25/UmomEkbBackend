@@ -3,7 +3,10 @@ package ru.umom.umombackend.models;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +27,13 @@ public class OrderEntity {
     boolean delivery;
 
 
+
+    @CreationTimestamp
+    Timestamp createdAt;
+
+    @UpdateTimestamp
+    Timestamp updatedAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
@@ -32,6 +42,10 @@ public class OrderEntity {
     @JoinTable(name = "ORDERS_DISHS",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "dish_id"))
-    private List<DishEntity> dishEntities = new ArrayList<>();
+    private List<DishEntity> dishes = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "organization_id")
+    private OrganizationEntity organization;
 
 }

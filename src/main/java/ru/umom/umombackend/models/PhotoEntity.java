@@ -3,6 +3,10 @@ package ru.umom.umombackend.models;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.sql.Timestamp;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -19,5 +23,12 @@ public class PhotoEntity {
 
     @Column(name = "file_name")
     String fileName;
+
+
+    @CreationTimestamp
+    Timestamp createdAt;
+
+    @UpdateTimestamp
+    Timestamp updatedAt;
 
 }

@@ -15,6 +15,7 @@ import ru.umom.umombackend.repositories.CategoryRepository;
 import ru.umom.umombackend.repositories.DishRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -62,7 +63,7 @@ public class DishService {
 
     public ResponseEntity<?> getAll(){
         List<DishEntity> dishes = dishRepository.findAll();
-        List<DishDto.Response.BaseResponse> response = new ArrayList<>();
+        List<DishDto.Response.Dish> response = new ArrayList<>();
         for(DishEntity dish: dishes){
             response.add(entityToBaseResponse(dish));
         }
@@ -73,7 +74,7 @@ public class DishService {
     public ResponseEntity<?> getByCategory(DishDto.Request.GetByCategory dto){
         CategoryEntity category = categoryRepository.findById(dto.categoryId()).orElseThrow(CategoryNotExistsError::new);
         Set<DishEntity> dishes = category.getDishes();
-        List<DishDto.Response.BaseResponse> response = new ArrayList<>();
+        List<DishDto.Response.Dish> response = new ArrayList<>();
         for(DishEntity dish: dishes){
             response.add(entityToBaseResponse(dish));
         }
@@ -81,8 +82,8 @@ public class DishService {
 
     }
 
-    private DishDto.Response.BaseResponse entityToBaseResponse(DishEntity dish){
-        return new DishDto.Response.BaseResponse(
+    private DishDto.Response.Dish entityToBaseResponse(DishEntity dish){
+        return new DishDto.Response.Dish(
                 dish.getId(),
                 dish.getTitle(),
                 dish.getDescription(),

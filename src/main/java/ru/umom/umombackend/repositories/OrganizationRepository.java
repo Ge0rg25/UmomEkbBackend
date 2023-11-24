@@ -6,4 +6,5 @@ import ru.umom.umombackend.models.OrganizationEntity;
 
 @Repository
 public interface OrganizationRepository extends JpaRepository<OrganizationEntity, String> {
+
 }
