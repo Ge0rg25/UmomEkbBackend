@@ -1,5 +1,6 @@
 package ru.umom.umombackend.services;
 
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -32,12 +33,14 @@ public class OrderService {
     DishRepository dishRepository;
     OrganizationRepository organizationRepository;
 
+    @Transactional
     public ResponseEntity<?> create(Jwt jwt, OrderDto.Request.Create dto) {
         UserEntity user = userRepository.findById(jwt.getSubject()).orElse(UserEntity.builder().id(jwt.getSubject()).name(jwt.getClaim("name")).build());
 
         List<DishEntity> dishes = dishRepository.findAllById(dto.dishesId());
 
         OrderEntity order = OrderEntity.builder().delivery(dto.delivery()).user(user).dishes(dishes).build();
+        userRepository.save(user);
         orderRepository.save(order);
         return ResponseEntity.ok().build();
     }
