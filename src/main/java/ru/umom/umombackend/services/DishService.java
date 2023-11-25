@@ -90,6 +90,7 @@ public class DishService {
 
     }
 
+    // Comment lol
     public DishDto.Response.Dish getDishById(DishDto.Request.GetById dto){
         DishEntity dish = dishRepository.findById(dto.id()).orElseThrow(DishNotExistsError::new);
         return entityToBaseResponse(dish);
