@@ -79,7 +79,7 @@ public class DishService {
 
     }
 
-    public ResponseEntity<?> getByCategory(DishDto.Request.GetByCategory dto){
+    public ResponseEntity<List<DishDto.Response.Dish>> getByCategory(DishDto.Request.GetByCategory dto){
         CategoryEntity category = categoryRepository.findById(dto.categoryId()).orElseThrow(CategoryNotExistsError::new);
         List<DishEntity> dishes = category.getDishes();
         List<DishDto.Response.Dish> response = new ArrayList<>();

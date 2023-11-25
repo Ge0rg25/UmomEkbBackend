@@ -66,7 +66,7 @@ public class OrderService {
     }
 
     public ResponseEntity<?> getAll(Jwt jwt) {
-        UserEntity user = userRepository.findById(jwt.getSubject()).orElse(UserEntity.builder().id(jwt.getSubject()).name(jwt.getClaim("name")).build());
+        UserEntity user = userRepository.findById(jwt.getSubject()).orElse(UserEntity.builder().id(jwt.getSubject()).name(jwt.getClaim("name")).orders(new ArrayList<>()).build());
         List<OrderEntity> orders = user.getOrders();
         UserDto.Response.User userDto = new UserDto.Response.User(user.getId(), user.getName(), user.getFloor(), user.getWorkstation());
         List<OrderDto.Response.BaseResponse> response = new ArrayList<>();

@@ -65,13 +65,13 @@ public class CatrgoryService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getAll(){
+    public List<CatrgoryDto.Response.BaseResponse> getAll(){
         List<CategoryEntity> categories = catrgoryRepository.findAll();
         List<CatrgoryDto.Response.BaseResponse> response = new ArrayList<>();
         for(CategoryEntity category: categories){
             response.add(entityToBaseResponse(category));
         }
-        return ResponseEntity.ok(response);
+        return response;
     }
 
     private CatrgoryDto.Response.BaseResponse entityToBaseResponse(CategoryEntity category){

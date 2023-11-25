@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.umom.umombackend.dto.CatrgoryDto;
 import ru.umom.umombackend.services.CatrgoryService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/categories")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -41,7 +43,7 @@ public class CategoryController {
     }
 
     @GetMapping("/get/all")
-    public ResponseEntity<?> getAll(){
+    public List<CatrgoryDto.Response.BaseResponse> getAll(){
         return catrgoryService.getAll();
     }
 
