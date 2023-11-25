@@ -45,7 +45,7 @@ public class OrderDto {
 
     public static class Request{
 
-        public record Create(boolean delivery, List<String> dishesId) implements Delivery, DishesId{}
+        public record Create(boolean delivery, List<String> dishesId, String organizationId) implements Delivery, DishesId, OrganizationId{}
 
         public record Complete(String id) implements Id {}
 

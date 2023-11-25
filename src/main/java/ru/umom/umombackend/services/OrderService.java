@@ -13,6 +13,7 @@ import ru.umom.umombackend.dto.UserDto;
 import ru.umom.umombackend.errors.common.OrganizationNotExsitsError;
 import ru.umom.umombackend.models.DishEntity;
 import ru.umom.umombackend.models.OrderEntity;
+import ru.umom.umombackend.models.OrganizationEntity;
 import ru.umom.umombackend.models.UserEntity;
 import ru.umom.umombackend.repositories.DishRepository;
 import ru.umom.umombackend.repositories.OrderRepository;
@@ -38,7 +39,9 @@ public class OrderService {
         userRepository.save(user);
         List<DishEntity> dishes = dishRepository.findAllById(dto.dishesId());
 
-        OrderEntity order = OrderEntity.builder().delivery(dto.delivery()).user(user).dishes(dishes).build();
+        OrganizationEntity organization = organizationRepository.findById(dto.organizationId()).orElseThrow(OrganizationNotExsitsError::new);
+
+        OrderEntity order = OrderEntity.builder().delivery(dto.delivery()).user(user).dishes(dishes).organization(organization).build();
 
         orderRepository.save(order);
         return ResponseEntity.ok().build();
