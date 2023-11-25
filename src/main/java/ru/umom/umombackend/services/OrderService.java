@@ -36,11 +36,11 @@ public class OrderService {
     @Transactional
     public ResponseEntity<?> create(Jwt jwt, OrderDto.Request.Create dto) {
         UserEntity user = userRepository.findById(jwt.getSubject()).orElse(UserEntity.builder().id(jwt.getSubject()).name(jwt.getClaim("name")).build());
-
+        userRepository.save(user);
         List<DishEntity> dishes = dishRepository.findAllById(dto.dishesId());
 
         OrderEntity order = OrderEntity.builder().delivery(dto.delivery()).user(user).dishes(dishes).build();
-        userRepository.save(user);
+
         orderRepository.save(order);
         return ResponseEntity.ok().build();
     }
