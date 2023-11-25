@@ -33,7 +33,6 @@ public class OrderService {
     DishRepository dishRepository;
     OrganizationRepository organizationRepository;
 
-    @Transactional
     public ResponseEntity<?> create(Jwt jwt, OrderDto.Request.Create dto) {
         UserEntity user = userRepository.findById(jwt.getSubject()).orElse(UserEntity.builder().id(jwt.getSubject()).name(jwt.getClaim("name")).build());
         userRepository.save(user);
