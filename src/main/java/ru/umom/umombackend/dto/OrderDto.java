@@ -16,6 +16,7 @@ public class OrderDto {
     }
 
     private interface IsCompleted{
+        @JsonProperty("is_completed")
         boolean isCompleted();
     }
 
@@ -33,10 +34,12 @@ public class OrderDto {
     }
 
     private interface OrganizationId {
+        @JsonProperty("organization_id")
         String organizationId();
     }
 
     private interface CreatedTimestamp {
+        @JsonProperty("created_timestamp")
         Timestamp createdTimestamp();
     }
 
