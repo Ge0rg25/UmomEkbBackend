@@ -57,7 +57,7 @@ public class CatrgoryService {
 
     public ResponseEntity<?> getByOrganization(CatrgoryDto.Request.GetByOrganization dto) {
         OrganizationEntity organization = organizationRepository.findById(dto.organizationId()).orElseThrow(OrganizationNotExsitsError::new);
-        Set<CategoryEntity> categories = organization.getCategories();
+        List<CategoryEntity> categories = (List<CategoryEntity>) organization.getCategories();
         List<CatrgoryDto.Response.BaseResponse> response = new ArrayList<>();
         for(CategoryEntity category: categories){
             response.add(entityToBaseResponse(category));

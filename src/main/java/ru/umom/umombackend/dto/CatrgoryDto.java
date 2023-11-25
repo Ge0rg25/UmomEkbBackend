@@ -32,7 +32,11 @@ public class CatrgoryDto {
         public record Update(String id,String title, String description, String photoId) implements Id, Title, Description, PhotoId{}
         public record Delete(String id) implements Id{}
 
-        public record GetByOrganization(String organizationId) implements OrganizationId{}
+        public record GetByOrganization(String organizationId) implements OrganizationId{
+
+
+
+        }
     }
 
 

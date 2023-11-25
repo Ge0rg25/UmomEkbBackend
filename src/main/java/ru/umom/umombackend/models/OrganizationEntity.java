@@ -7,7 +7,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -25,7 +27,7 @@ public class OrganizationEntity {
     String id;
 
     @OneToMany(mappedBy = "organization", orphanRemoval = true)
-    Set<CategoryEntity> categories = new LinkedHashSet<>();
+    List<CategoryEntity> categories = new ArrayList<>();
 
     @Column
     String title;
@@ -47,6 +49,6 @@ public class OrganizationEntity {
     Timestamp updatedAt;
 
     @OneToMany(mappedBy = "organization", orphanRemoval = true)
-    private Set<OrderEntity> orders = new LinkedHashSet<>();
+    private List<OrderEntity> orders = new ArrayList<>();
 
 }

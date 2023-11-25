@@ -35,8 +35,12 @@ public class DishService {
                 .title(dto.title())
                 .description(dto.description())
                 .price(dto.price())
-                .cpfc(dto.cpfc())
+                .calories(dto.calories())
+                .fats(dto.fats())
+                .carbohydrates(dto.carbohydrates())
+                .proteins(dto.proteins())
                 .category(category)
+                .photoId(dto.photoId())
                 .build();
 
         dishRepository.save(dish);
@@ -48,7 +52,11 @@ public class DishService {
         dish.setTitle(dto.title());
         dish.setDescription(dto.description());
         dish.setPrice(dto.price());
-        dish.setCpfc(dto.cpfc());
+        dish.setCalories(dto.calories());
+        dish.setFats(dto.fats());
+        dish.setCarbohydrates(dto.carbohydrates());
+        dish.setProteins(dto.proteins());
+        dish.setPhotoId(dto.photoId());
         dishRepository.save(dish);
         return ResponseEntity.ok().build();
     }
@@ -73,7 +81,7 @@ public class DishService {
 
     public ResponseEntity<?> getByCategory(DishDto.Request.GetByCategory dto){
         CategoryEntity category = categoryRepository.findById(dto.categoryId()).orElseThrow(CategoryNotExistsError::new);
-        Set<DishEntity> dishes = category.getDishes();
+        List<DishEntity> dishes = category.getDishes();
         List<DishDto.Response.Dish> response = new ArrayList<>();
         for(DishEntity dish: dishes){
             response.add(entityToBaseResponse(dish));
@@ -88,8 +96,12 @@ public class DishService {
                 dish.getTitle(),
                 dish.getDescription(),
                 dish.getPrice(),
-                dish.getCpfc(),
-                dish.getCategory().getId()
+                dish.getCalories(),
+                dish.getProteins(),
+                dish.getFats(),
+                dish.getCarbohydrates(),
+                dish.getCategory().getId(),
+                dish.getPhotoId()
         );
     }
 

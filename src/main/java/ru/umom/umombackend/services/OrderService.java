@@ -4,15 +4,14 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import ru.umom.umombackend.dto.DishDto;
 import ru.umom.umombackend.dto.OrderDto;
 import ru.umom.umombackend.dto.UserDto;
 import ru.umom.umombackend.errors.common.OrganizationNotExsitsError;
 import ru.umom.umombackend.models.DishEntity;
 import ru.umom.umombackend.models.OrderEntity;
-import ru.umom.umombackend.models.OrganizationEntity;
 import ru.umom.umombackend.models.UserEntity;
 import ru.umom.umombackend.repositories.DishRepository;
 import ru.umom.umombackend.repositories.OrderRepository;
@@ -33,59 +32,51 @@ public class OrderService {
     DishRepository dishRepository;
     OrganizationRepository organizationRepository;
 
-    public ResponseEntity<?> create(Jwt jwt, OrderDto.Request.Create dto){
-        UserEntity user = userRepository.findById(jwt.getSubject()).orElse(UserEntity.builder()
-                .id(jwt.getSubject())
-                .name(jwt.getClaim("name"))
-                .build());
+    public ResponseEntity<?> create(Jwt jwt, OrderDto.Request.Create dto) {
+        UserEntity user = userRepository.findById(jwt.getSubject()).orElse(UserEntity.builder().id(jwt.getSubject()).name(jwt.getClaim("name")).build());
 
         List<DishEntity> dishes = dishRepository.findAllById(dto.dishesId());
 
-        OrderEntity order = OrderEntity.builder()
-                .delivery(dto.delivery())
-                .user(user)
-                .dishes(dishes)
-                .build();
+        OrderEntity order = OrderEntity.builder().delivery(dto.delivery()).user(user).dishes(dishes).build();
         orderRepository.save(order);
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<?> delete(OrderDto.Request.Delete dto){
+    public ResponseEntity<?> complete(OrderDto.Request.Complete dto) {
         OrderEntity order = orderRepository.findById(dto.id()).orElseThrow();
-        orderRepository.delete(order);
+        order.setCompleted(true);
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<?> getAllByOrganization(OrderDto.Request.GetAllByOrganization dto){
-        Set<OrderEntity> orders = organizationRepository.findById(dto.organizationId()).orElseThrow(OrganizationNotExsitsError::new).getOrders();
-        List<OrderDto.Response.AdminOrders> response = new ArrayList<>();
+    public ResponseEntity<?> getAllByOrganization(OrderDto.Request.GetAllByOrganization dto) {
+        List<OrderEntity> orders = organizationRepository.findById(dto.organizationId()).orElseThrow(OrganizationNotExsitsError::new).getOrders();
+        List<OrderDto.Response.BaseResponse> response = new ArrayList<>();
 
-        for(OrderEntity order: orders){
-            List<String> dishesId = new ArrayList<>();
-            for(DishEntity dish: order.getDishes()){
-                dishesId.add(dish.getId());
+        for (OrderEntity order : orders) {
+            List<DishDto.Response.Dish> dishes = new ArrayList<>();
+            for (DishEntity dish : order.getDishes()) {
+                dishes.add(new DishDto.Response.Dish(dish.getId(), dish.getTitle(), dish.getDescription(), dish.getPrice(), dish.getCalories(), dish.getProteins(), dish.getFats(), dish.getCarbohydrates(), dish.getCategory().getId(), dish.getPhotoId()));
             }
 
             UserDto.Response.User user = new UserDto.Response.User(order.getUser().getId(), order.getUser().getName(), order.getUser().getFloor(), order.getUser().getWorkstation());
-            response.add(new OrderDto.Response.AdminOrders(order.getId(), user, dishesId, order.isDelivery()));
+            response.add(new OrderDto.Response.BaseResponse(order.getId(), order.isDelivery(), dishes, user, order.getCreatedAt(), order.isCompleted()));
         }
 
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getAll(Jwt jwt){
-        UserEntity user = userRepository.findById(jwt.getSubject()).orElse(UserEntity.builder()
-                .id(jwt.getSubject())
-                .name(jwt.getClaim("name"))
-                .build());
-        Set<OrderEntity> orders = user.getOrders();
-        List<OrderDto.Response.UserOrders> response = new ArrayList<>();
-        for(OrderEntity order: orders){
-            List<String> dishesId = new ArrayList<>();
-            for(DishEntity dish: order.getDishes()){
-                dishesId.add(dish.getId());
+    public ResponseEntity<?> getAll(Jwt jwt) {
+        UserEntity user = userRepository.findById(jwt.getSubject()).orElse(UserEntity.builder().id(jwt.getSubject()).name(jwt.getClaim("name")).build());
+        List<OrderEntity> orders = user.getOrders();
+        UserDto.Response.User userDto = new UserDto.Response.User(user.getId(), user.getName(), user.getFloor(), user.getWorkstation());
+        List<OrderDto.Response.BaseResponse> response = new ArrayList<>();
+        for (OrderEntity order : orders) {
+            List<DishDto.Response.Dish> dishes = new ArrayList<>();
+            for (DishEntity dish : order.getDishes()) {
+                dishes.add(new DishDto.Response.Dish(dish.getId(), dish.getTitle(), dish.getDescription(), dish.getPrice(), dish.getCalories(), dish.getProteins(), dish.getFats(), dish.getCarbohydrates(), dish.getCategory().getId(), dish.getPhotoId()));
+
             }
-            response.add(new OrderDto.Response.UserOrders(order.getId(), order.isDelivery(), dishesId));
+            response.add(new OrderDto.Response.BaseResponse(order.getId(), order.isDelivery(), dishes, userDto, order.getCreatedAt(), order.isCompleted()));
         }
         return ResponseEntity.ok(response);
     }

@@ -34,6 +34,9 @@ public class OrderEntity {
     @UpdateTimestamp
     Timestamp updatedAt;
 
+    @Column
+    boolean isCompleted;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;

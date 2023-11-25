@@ -10,7 +10,7 @@ import ru.umom.umombackend.dto.DishDto;
 import ru.umom.umombackend.services.DishService;
 
 @RestController
-@RequestMapping("/dish")
+@RequestMapping("/dishes")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class DishController {
@@ -37,7 +37,7 @@ public class DishController {
         return dishService.getAll();
     }
 
-    @PostMapping("/get/by/categories")
+    @PostMapping("/get/by/category")
     public ResponseEntity<?> getByCategory(@RequestBody @Validated DishDto.Request.GetByCategory dto){
         return dishService.getByCategory(dto);
     }

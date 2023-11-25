@@ -31,9 +31,19 @@ public class DishEntity {
     double price;
 
     @Column
-    double cpfc;
+    double calories;
 
+    @Column
+    double proteins;
 
+    @Column
+    double fats;
+
+    @Column
+    double carbohydrates;
+
+    @Column
+    String photoId;
 
     @CreationTimestamp
     Timestamp createdAt;

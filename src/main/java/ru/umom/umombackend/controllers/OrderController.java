@@ -24,9 +24,9 @@ public class OrderController {
         return orderService.create(jwt, dto);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(@RequestBody @Validated OrderDto.Request.Delete dto){
-        return orderService.delete(dto);
+    @PatchMapping("/complete")
+    public ResponseEntity<?> delete(@RequestBody @Validated OrderDto.Request.Complete dto){
+        return orderService.complete(dto);
     }
 
     @GetMapping("/get/all")
