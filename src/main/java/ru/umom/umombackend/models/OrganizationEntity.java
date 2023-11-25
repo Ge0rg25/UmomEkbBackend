@@ -27,6 +27,7 @@ public class OrganizationEntity {
     String id;
 
     @OneToMany(mappedBy = "organization", orphanRemoval = true)
+    @Builder.Default
     List<CategoryEntity> categories = new ArrayList<>();
 
     @Column
