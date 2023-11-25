@@ -42,6 +42,7 @@ public class DishController {
         return dishService.getByCategory(dto);
     }
 
+    // F off
     @PostMapping("/get/by/id")
     public DishDto.Response.Dish getDishById(@RequestBody @Validated DishDto.Request.GetById dto){
         return dishService.getDishById(dto);
