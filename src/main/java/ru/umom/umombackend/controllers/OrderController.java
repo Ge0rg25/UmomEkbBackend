@@ -35,7 +35,7 @@ public class OrderController {
     }
 
 
-    @GetMapping("/get/by/organization")
+    @PostMapping("/get/by/organization")
     public ResponseEntity<?> getAllByOrganization(@RequestBody @Validated OrderDto.Request.GetAllByOrganization dto){
         return orderService.getAllByOrganization(dto);
     }
