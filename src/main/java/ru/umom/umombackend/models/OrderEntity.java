@@ -45,6 +45,7 @@ public class OrderEntity {
     @JoinTable(name = "ORDERS_DISHS",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "dish_id"))
+    @Builder.Default
     private List<DishEntity> dishes = new ArrayList<>();
 
     @ManyToOne

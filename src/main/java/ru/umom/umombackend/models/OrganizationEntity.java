@@ -49,6 +49,7 @@ public class OrganizationEntity {
     Timestamp updatedAt;
 
     @OneToMany(mappedBy = "organization", orphanRemoval = true)
+    @Builder.Default
     private List<OrderEntity> orders = new ArrayList<>();
 
 }

@@ -35,6 +35,7 @@ public class UserEntity {
     short workstation;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @Builder.Default
     private List<OrderEntity> orders = new ArrayList<>();
 
 

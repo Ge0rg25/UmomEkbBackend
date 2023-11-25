@@ -40,6 +40,7 @@ public class CategoryEntity {
     Timestamp updatedAt;
 
     @OneToMany(mappedBy = "category", orphanRemoval = true)
+    @Builder.Default
     private List<DishEntity> dishes = new ArrayList<>();
 
     @ManyToOne(optional = false)
