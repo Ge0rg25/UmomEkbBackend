@@ -58,6 +58,8 @@ public class DishDto {
 
         public record GetByCategory(String categoryId) implements CategoryId{}
 
+        public record GetById(String id) implements Id{}
+
     }
 
     public static class Response {

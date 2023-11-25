@@ -90,6 +90,12 @@ public class DishService {
 
     }
 
+    public DishDto.Response.Dish getDishById(DishDto.Request.GetById dto){
+        DishEntity dish = dishRepository.findById(dto.id()).orElseThrow(DishNotExistsError::new);
+        return entityToBaseResponse(dish);
+
+    }
+
     private DishDto.Response.Dish entityToBaseResponse(DishEntity dish){
         return new DishDto.Response.Dish(
                 dish.getId(),
@@ -104,5 +110,6 @@ public class DishService {
                 dish.getPhotoId()
         );
     }
+
 
 }
