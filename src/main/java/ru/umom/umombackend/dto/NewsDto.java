@@ -1,5 +1,6 @@
 package ru.umom.umombackend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.parameters.P;
 
 public class NewsDto {
@@ -17,6 +18,7 @@ public class NewsDto {
     }
 
     private interface PhotoId {
+        @JsonProperty("photo_id")
         String photoId();
     }
 
